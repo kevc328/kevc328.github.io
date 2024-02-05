@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mortgage Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        input, button {
+            margin: 5px 0;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Mortgage Calculator</h1>
+
+    <form id="mortgageForm">
+        <label for="principal">Loan Amount:</label>
+        <input type="number" id="principal" placeholder="Enter loan amount" required>
+
+        <label for="interestRate">Interest Rate (%):</label>
+        <input type="number" step="0.01" id="interestRate" placeholder="Enter interest rate" required>
+
+        <label for="loanTerm">Loan Term (years):</label>
+        <input type="number" id="loanTerm" placeholder="Enter loan term" required>
+
+        <button type="button" onclick="calculateMortgage()">Calculate</button>
+    </form>
+
+    <h2 id="result"></h2>
+
+    <script>
+        function calculateMortgage() {
+            var principal = document.getElementById('principal').value;
+            var interestRate = document.getElementById('interestRate').value / 100 / 12;
+            var loanTerm = document.getElementById('loanTerm').value * 12;
+
+            var monthlyPayment = (principal * interestRate) / (1 - Math.pow(1 + interestRate, -loanTerm));
+            var formattedPayment = monthlyPayment.toFixed(2);
+
+            document.getElementById('result').innerHTML = "Monthly Payment: $" + formattedPayment;
+        }
+    </script>
+
+</body>
+</html>
