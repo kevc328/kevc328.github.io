@@ -20,6 +20,16 @@
             margin: 5px 0;
             padding: 8px;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -41,16 +51,63 @@
 
     <h2 id="result"></h2>
 
+    <table id="paymentSchedule">
+        <thead>
+            <tr>
+                <th>Time Index</th>
+                <th>Opening Principle</th>
+                <th>Interest</th>
+                <th>Payment</th>
+                <th>Closing Principle</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
     <script>
         function calculateMortgage() {
-            var principal = document.getElementById('principal').value;
-            var interestRate = document.getElementById('interestRate').value / 100 / 12;
-            var loanTerm = document.getElementById('loanTerm').value * 12;
+            var principal = parseFloat(document.getElementById('principal').value);
+            var interestRate = parseFloat(document.getElementById('interestRate').value) / 100 / 12;
+            var loanTerm = parseFloat(document.getElementById('loanTerm').value) * 12;
 
             var monthlyPayment = (principal * interestRate) / (1 - Math.pow(1 + interestRate, -loanTerm));
             var formattedPayment = monthlyPayment.toFixed(2);
 
             document.getElementById('result').innerHTML = "Monthly Payment: $" + formattedPayment;
+
+            // Calculate payment schedule
+            var paymentSchedule = [];
+            var openingPrincipal = principal;
+
+            for (var i = 1; i <= loanTerm; i++) {
+                var interest = openingPrincipal * interestRate;
+                var payment = monthlyPayment;
+                var closingPrincipal = openingPrincipal - (payment - interest);
+
+                paymentSchedule.push({
+                    timeIndex: i,
+                    openingPrincipal: openingPrincipal.toFixed(2),
+                    interest: interest.toFixed(2),
+                    payment: payment.toFixed(2),
+                    closingPrincipal: closingPrincipal.toFixed(2)
+                });
+
+                openingPrincipal = closingPrincipal;
+            }
+
+            // Display payment schedule in the table
+            var tableBody = document.querySelector('#paymentSchedule tbody');
+            tableBody.innerHTML = '';
+
+            paymentSchedule.forEach(function (row) {
+                var tr = document.createElement('tr');
+                for (var key in row) {
+                    var td = document.createElement('td');
+                    td.appendChild(document.createTextNode(row[key]));
+                    tr.appendChild(td);
+                }
+                tableBody.appendChild(tr);
+            });
         }
     </script>
 
