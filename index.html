@@ -69,7 +69,13 @@
             var principal = parseFloat(document.getElementById('principal').value);
             var interestRate = parseFloat(document.getElementById('interestRate').value) / 100 / 12;
             var loanTerm = parseFloat(document.getElementById('loanTerm').value) * 12;
-
+            
+            if (isNaN(principal) || isNaN(interestRate) || isNaN(loadTerm)) {
+                alert("Please enter valid values for all three inputs.");
+                return;
+            }
+            
+            
             var monthlyPayment = (principal * interestRate) / (1 - Math.pow(1 + interestRate, -loanTerm));
             var formattedPayment = monthlyPayment.toFixed(2);
 
