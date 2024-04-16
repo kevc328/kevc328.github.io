@@ -7,3 +7,5 @@ Future to-do:
 4. Simple calculator
 5. Recipes database
 6. Weather website to connect via API
+7. Survival tool pick with randomise order
+8. Map geographical area comparison
