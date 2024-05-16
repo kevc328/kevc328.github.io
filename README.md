@@ -9,3 +9,4 @@ Future to-do:
 6. Weather website to connect via API
 7. Survival tool pick with randomise order
 8. Map geographical area comparison
+9. Rent vs home ownership
